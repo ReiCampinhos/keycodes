@@ -3,74 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <title>Hello World</title>
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-
-    <!-- Don't use this in production: -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      body {background-color: powderblue;}
+    </style>
   </head>
   <body>
     <div id="root"></div>
-    <script type="text/babel">
+    <script>
+      document.addEventListener("keyup", handleUp, false);
+      document.addEventListener("keydown", handleDown, false);
+      document.addEventListener("keypress", handlePress, false);
 
-      ReactDOM.render(
-        <App />,
-        document.getElementById('root')
-      );
+      function handleDown(e) {
+        const key = e.keyCode;
+        setCode("[KEY DOWN] " + key);
+      };
 
-      function App() {
-        const [key, setKey] = React.useState([]);
-        const setCode = k => setKey([k, ...key]);
+      function handleUp(e) {
+        const key = e.keyCode;
+        setCode("[KEY UPUP] " + key);
+      };
 
-        React.useEffect(() => {
-          const handleDown = e => {
-            const key = e.keyCode;
-            setCode("[KEY DOWN] " + key);
-          };
+      function handlePress(e) {
+        const key = e.keyCode;
+        setCode("[KEY PRES] " + key);
+      };
 
-          const handleUp = e => {
-            const key = e.keyCode;
-            setCode("[KEY UPUP] " + key);
-          };
-
-          const handlePress = e => {
-            const key = e.keyCode;
-            setCode("[KEY PRES] " + key);
-          };
-
-          document.addEventListener("keyup", handleUp, false);
-          document.addEventListener("keydown", handleDown, false);
-          document.addEventListener("keypress", handlePress, false);
-
-          return () => {
-            document.removeEventListener("keyup", handleUp, false);
-            document.removeEventListener("keydown", handleDown, false);
-            document.removeEventListener("keypress", handlePress, false);
-          };
-        }, [setCode]);
-
-        return (
-          <div className="App">
-            {key.map(k => (
-              <h4>{k}</h4>
-            ))}
-          </div>
-        );
+      function setCode(message) {
+        console.log(message);
+        var h = document.createElement("H1");
+        var t = document.createTextNode(message);
+        h.appendChild(t);
+        document.getElementById('root').appendChild(h);
       }
 
     </script>
-    <!--
-      Note: this page is a great way to try React but it's not suitable for production.
-      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
-
-      Read this section for a production-ready setup with JSX:
-      https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
-
-      In a larger project, you can use an integrated toolchain that includes JSX instead:
-      https://reactjs.org/docs/create-a-new-react-app.html
-
-      You can also use React without JSX, in which case you can remove Babel:
-      https://reactjs.org/docs/react-without-jsx.html
-    -->
   </body>
 </html>
